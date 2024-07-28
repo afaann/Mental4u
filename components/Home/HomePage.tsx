@@ -7,7 +7,7 @@ export default function HomePage({ userName }) {
   const navigation = useNavigation();
 
   const handleConsultationClick = () => {
-    navigation.navigate('ConsultationDetailsPage');
+    navigation.navigate('Profile');
   };
 
   const handleScheduleClick = () => {
@@ -26,21 +26,22 @@ export default function HomePage({ userName }) {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.mainHeader}>Mental4U</Text>
-        <Text style={styles.greeting}>Hi, {userName}</Text>
+        <Text style={styles.greeting}>Welcome to Mental4u {userName}</Text>
       </View>
       <Text style={styles.text}>Home</Text>
       <View style={styles.gridContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleConsultationClick}>
-          <Text style={styles.buttonText}>Consult a Medical Health Professional Online</Text>
-        </TouchableOpacity>
+
         <TouchableOpacity style={styles.button} onPress={handleScheduleClick}>
-          <Text style={styles.buttonText}>Schedule an Appointment</Text>
+          <Text style={styles.buttonText}>Find a Suitable Doctor for YOU!</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleProgressClick}>
           <Text style={styles.buttonText}>How are You Feeling Today?</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleForumClick}>
           <Text style={styles.buttonText}>Share and Learn with Like-minded Individuals!</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleConsultationClick}>
+          <Text style={styles.buttonText}>Visit Your Profile!</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.header}>About Us</Text>

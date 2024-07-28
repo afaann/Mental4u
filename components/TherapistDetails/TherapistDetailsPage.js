@@ -13,6 +13,7 @@ export default function TherapistDetailsPage({ route }) {
     <View style={styles.container}>
       <Text style={styles.header}>{therapist.name}</Text>
       <Text style={styles.subheader}>Specialty: {therapist.specialty}</Text>
+      <Text style={styles.subheader}>Phone: {therapist.phone}</Text>
       <Text style={styles.sectionHeader}>Availability</Text>
       <View style={styles.scheduleContainer}>
         {therapistSchedule.length > 0 ? (

@@ -4,11 +4,15 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginPage from '../Login/LoginPage';
 import HomePage from '../Home/HomePage';
-import RagistrationPage from '../Registration/RegistrationPage';
+import RegistrationPage from '../Registration/RegistrationPage';
 import MyTab from './MyTab';
 import ConsultationDetailsPage from '../Consultation/ConsultationDetailsPage';
 import TherapistSearchPage from '../TherapistSearch/TherapistSearchPage';
 import TherapistDetailsPage from '../TherapistDetails/TherapistDetailsPage';
+import EditProfilePage from '../EditProfile/EditProfilePage'
+import PersonalHistoryPage from '../Profile/PersonalHistoryPage'
+import SettingsPage from '../Profile/SettingsPage'
+import HelpPage from '../Profile/HelpPage'
 
 
 const Stack = createNativeStackNavigator();
@@ -29,8 +33,8 @@ export default function MyStack() {
         />
 
         <Stack.Screen 
-        name="Register" 
-        component={RagistrationPage} 
+        name="RegistrationPage" 
+        component={RegistrationPage} 
         options={{ headerBackVisible: true ,title: 'Registration' }}
         />
 
@@ -56,6 +60,30 @@ export default function MyStack() {
           name="TherapistDetailsPage" 
           component={TherapistDetailsPage} 
           options={{ title: 'Therapist Details' }} 
+        />
+                
+        <Stack.Screen 
+          name="EditProfilePage" 
+          component={EditProfilePage} 
+          options={{ title: 'Edit Profile' }} 
+        />
+
+        <Stack.Screen 
+          name="PersonalHistoryPage" 
+          component={PersonalHistoryPage} 
+          options={{ title: 'Personal History' }} 
+        />
+
+        <Stack.Screen 
+          name="SettingsPage" 
+          component={SettingsPage} 
+          options={{ title: 'Settings' }} 
+        />
+
+        <Stack.Screen 
+          name="HelpPage" 
+          component={HelpPage} 
+          options={{ title: 'Help' }} 
         />
       </Stack.Navigator>
     

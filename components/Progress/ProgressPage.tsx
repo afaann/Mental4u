@@ -1,16 +1,54 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import supabase from '../../supabaseClient';
 import { Colors } from '@/constants/Colors';
 
 export default function ProgressPage() {
   const [mood, setMood] = useState('');
   const [moodHistory, setMoodHistory] = useState([]);
+  const [userId, setUserId] = useState(null);
 
-  const handleMoodClick = (selectedMood) => {
-    const currentDate = new Date().toLocaleDateString();
-    const updatedHistory = [...moodHistory, { mood: selectedMood, date: currentDate }];
-    setMoodHistory(updatedHistory);
-    setMood(selectedMood);
+  useEffect(() => {
+    fetchUserId();
+    fetchMoodHistory();
+  }, []);
+
+  const fetchUserId = async () => {
+    const session = await supabase.auth.getSession();
+    if (session.data.session) {
+      setUserId(session.data.session.user.id);
+    }
+  };
+
+  const fetchMoodHistory = async () => {
+    const { data, error } = await supabase
+      .from('mood')
+      .select('*')
+      .order('date', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching mood history:', error);
+    } else {
+      setMoodHistory(data);
+    }
+  };
+
+  const handleMoodClick = async (selectedMood) => {
+    if (!userId) return;
+
+    const currentDate = new Date().toISOString().split('T')[0];
+    const newMood = { user_id: userId, mood: selectedMood, date: currentDate };
+
+    const { data, error } = await supabase
+      .from('mood')
+      .insert([newMood]);
+
+    if (error) {
+      console.error('Error saving mood:', error);
+    } else {
+      setMoodHistory([newMood, ...moodHistory]);
+      setMood(selectedMood);
+    }
   };
 
   const calculateMoodPercentages = () => {
@@ -79,7 +117,7 @@ export default function ProgressPage() {
           )}
           {moodHistory.length > 0 && (
             <View>
-              <Text style={styles.header}>Mood Percentages (Last Month)</Text>
+              <Text style={styles.header}>Mood Percentages</Text>
               <Text>Happy: {moodPercentages.Happy.toFixed(2)}%</Text>
               <Text>Sad: {moodPercentages.Sad.toFixed(2)}%</Text>
               <Text>Angry: {moodPercentages.Angry.toFixed(2)}%</Text>
